@@ -1,9 +1,11 @@
 # kf
 
-`kf` is like `cf` for Knative
+`kf` is like `cf` for Knative. It combines the best of
+the best of the `cf` CLI, the OSBAPI spec, [service-catalog](svcat)
+and Knative into a unified Platform as a Service Experience.
 
 ## Getting started.
-Build a `kf` binary and follow our [install instructions](/.install.md) 
+Build a `kf` binary and follow our [install instructions](./docs/install.md) 
 for Knative. 
 
 ## How to build
