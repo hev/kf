@@ -14,8 +14,7 @@ store your docker registry details in a an environment variable. This
 install guide uses gcr on gke. 
 
 ```
-export GCP_PROJECT=<PROJECT_ID>
-export KF_REGISTRY=gcr.io/$GCP_PROJECT
+export KF_REGISTRY=gcr.io/<PROJECT_ID>
 ```
 
 ## Install Istio && Knative
@@ -74,45 +73,18 @@ kf marketplace
 
 ## Install a service broker
 Once you have the service catalog you'll want to install a service
-broker. You can use helm to install the gcp-service-broker from
-the third_party directory. 
+broker. This exampe will use a the `sc` cli tool and a hosted 
+set of service from GCP.
 
-If you haven't already, configure GCP service account & APIs.
+Install `sc` with homebrew
 ```
-gcloud iam service-accounts create \
-    gcp-service-broker
-
-gcloud iam service-accounts keys \
-    create /tmp/key.json --iam-account \
-    gcp-service-broker@$GCP_PROJECT.iam.gserviceaccount.com
-
-gcloud projects \
-    add-iam-policy-binding \
-    $GCP_PROJECT --member \
-    serviceAccount:gcp-service-broker@$GCP_PROJECT.iam.gserviceaccount.com \
-    --role "roles/owner"
-
-gcloud services enable \
-    cloudresourcemanager.googleapis.com \
-    iam.googleapis.com
+brew update
+brew install kubernetes-service-catalog-client
 ```
 
-Once you have your key.json, copy this in the values.yaml file
-in `/third_party/gcp-service-broker` file. 
-
-
-Configure helm
+Install the broker
 ```
-kubectl create serviceaccount --namespace kube-system tiller 
-kubectl create clusterrolebinding tiller-cluster-rule \
---clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-helm init --service-account tiller
-```
-
-Install the gcp-service broker frm the `third_party/gcp-service-broker` 
-directory.
-```
-helm install . --name gcp-service-broker
+sc add-gcp-broker
 ```
 
 [knative]: https://github.com/knative/docs/tree/master/docs/install
