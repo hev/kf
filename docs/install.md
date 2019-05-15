@@ -48,14 +48,6 @@ directory run the following command.
 kf upload-buildpacks --container-registry $KF_REGISTRY
 ```
 
-## Push your first app
-At this point you are ready to deploy your first app using `kf`. Run the following command 
-to push your first app. 
-
-```
-kf push helloworld --container-registry $KF_REGISTRY
-```
-
 ## Install the service catalog
 You can install the service catalog from the third_party directory included 
 in this repo. 
